@@ -1,20 +1,28 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, RetrieveUpdateAPIView, DestroyAPIView
 from restaurants.models import Restaurant
-from .serializers import RestaurantListSerializer
+from .serializers import RestaurantListSerializer, RestaurantDetailSerializer, UpdateDetailSerializer
 
 class RestaurantListView(ListAPIView):
 	queryset = Restaurant.objects.all()
 	serializer_class = RestaurantListSerializer
 
+
+class RestaurantDetailView(RetrieveAPIView):
+	queryset = Restaurant.objects.all()
+	serializer_class = RestaurantDetailSerializer
+	lookup_field = 'id'
+	lookup_url_kwarg = 'restaurant_id'
+
+class RestaurantUpdateView(RetrieveUpdateAPIView):
+	queryset = Restaurant.objects.all()
+	serializer_class = UpdateDetailSerializer
+	lookup_field = 'id'
+	lookup_url_kwarg = 'restaurant_id'
+
+
 # Complete me
-class RestaurantDetailView():
-
-
-
-# Complete me
-class RestaurantUpdateView():
-
-
-
-# Complete me
-class RestaurantDeleteView():
+class RestaurantDeleteView(DestroyAPIView):
+	queryset = Restaurant.objects.all()
+	serializer_class = RestaurantListSerializer
+	lookup_field = 'id'
+	lookup_url_kwarg = 'restaurant_id'
